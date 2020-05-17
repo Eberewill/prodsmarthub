@@ -13,6 +13,7 @@ connectDB();
 //define routes with app.use(routUrl, routFile)
 app.use("/api/users", require("./route/api/users"));
 app.use("/api/auth", require("./route/api/auth"));
+app.use("/api/projects", require("./route/api/project"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

@@ -21,42 +21,41 @@ router.post(
   ],
   async (re, res) => {
     //validation for imput fields
-   
-   try {
-     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      //destructure request body
+      const { title, subtitle, endingdate, status, giturl, tags } = req.body;
+
+      //build project object
+
+      //get current user
+      const user = await User.findById(req.user.id).select("-password");
+
+      projectFields.owner = user;
+
+      const projectFields = {};
+      if (title) projectFields.title = title;
+      if (subtitle) projectFields.subtitle = subtitle;
+      if (status) projectFields.status = status;
+      if (giturl) projectFields.giturl = giturl;
+      if (endingdate) projectFields.endingdate = endingdate;
+
+      if (tags) {
+        projectFields.tags = tags.split(",").map((tag) => tag.trim());
+      }
+
+      const project = new Project(projectFields);
+      await project.save();
+      res.json(project);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server Error ");
     }
-
-    //destructure request body
-    const { title, subtitle, endingdate, status, giturl, tags } = req.body;
-
-    //build project object
-
-    //get current user
-    const user = await User.findById(req.user.id).select("-password");
-
-    projectFields.owner = user;
-
-    const projectFields = {};
-    if (title) projectFields.title = title;
-    if (subtitle) projectFields.subtitle = subtitle;
-    if (status) projectFields.status = status;
-    if (giturl) projectFields.giturl = giturl;
-    if (endingdate) projectFields.endingdate = endingdate;
-
-    if (tags) {
-      projectFields.tags = tags.split(",").map((tag) => tag.trim());
-    }
-
-    const project = new Project(projectFields);
-    await project.save();
-    res.json(project);
-   } catch (err) {
-    console.error(err.message) 
-    res.status(500).send("server Error ")
-   }
-    
   }
 );
 
@@ -64,22 +63,18 @@ router.post(
 //@ Desc: Get My Projects
 //@ Access: Private
 
-router.get('/', auth, (req, res)=>{
+router.get("/", auth, async (req, res) => {
   try {
-    const myprojects = await Project.findOne({owner: req.user})
-    if(!myprojects ){
-      res.send("not project for this user")
+    const myprojects = await Project.findOne({ owner: req.user.id });
+    if (!myprojects) {
+      res.send("not project for this user");
     }
 
-    res.json(myprojects)
+    res.json(myprojects);
   } catch (err) {
-    console.error(err.message) 
-        res.status(500).send("server Error l")
+    console.error(err.message);
+    res.status(500).send("server Error l");
   }
-
-  
-})
-    
-
+});
 
 module.exports = router;

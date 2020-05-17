@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
@@ -10,7 +9,7 @@ const { check, validationResult } = require("express-validator");
 //import User Model
 const User = require("../../models/User");
 
-// @route Post api/user
+// @route Post api/users
 // @desc   user-reg Rout
 // @access public
 router.post(
