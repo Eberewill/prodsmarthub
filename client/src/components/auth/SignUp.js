@@ -64,6 +64,14 @@ const SignUp = () => {
                           Sign up
                         </button>
                       </div>
+                      <div>
+                        <small>
+                          <Link to="/login">
+                            {" "}
+                            Already have An Account? Sign In
+                          </Link>
+                        </small>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -76,4 +84,13 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+SignUp.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(SignUp);
