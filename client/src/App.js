@@ -5,6 +5,8 @@ import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import Alert from "./components/alert/Alert";
 import Nav from "./components/layout/nav/Nav";
+import MainNav from "./components/layout/nav/MainNav";
+import Embed from "./components/embed/Embed";
 
 import Footer from "./components/layout/Footer";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -24,14 +26,22 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Nav />
-          <Alert />
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          </Switch>
-          <Footer />
+          <div className="wrapper">
+            <Nav />
+            <div className="main">
+              <MainNav />
+              <Alert />
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/signup" component={SignUp} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
+                <PrivateRoute exact path="/video" component={Embed} />
+              </Switch>
+
+              <Footer />
+            </div>
+          </div>
         </Fragment>
       </Router>
     </Provider>

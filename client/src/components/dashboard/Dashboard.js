@@ -32,7 +32,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-primary"
                           role="progressbar"
-                          style="width: 57%"
+                          style={{ width: "57%" }}
                         ></div>
                       </div>
                     </div>
@@ -60,7 +60,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 64%"
+                          style={{ width: "64%" }}
                         ></div>
                       </div>
                     </div>
@@ -90,7 +90,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-warning"
                           role="progressbar"
-                          style="width: 82%"
+                          style={{ width: "82%" }}
                         ></div>
                       </div>
                     </div>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-success"
                           role="progressbar"
-                          style="width: 32%"
+                          style={{ width: "32%" }}
                         ></div>
                       </div>
                     </div>
@@ -156,7 +156,7 @@ const Dashboard = () => {
                 <h5 className="card-title mb-0">Real-Time</h5>
               </div>
               <div className="card-body p-2">
-                <div id="world_map" style="height:304px;"></div>
+                <div id="world_map" style={{ height: "304px" }}></div>
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 43%;"
+                          style={{ width: "43%" }}
                           aria-valuenow="43"
                           aria-valuemin="0"
                           aria-valuemax="100"
@@ -225,7 +225,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 27%;"
+                          style={{ width: "27%" }}
                           aria-valuenow="27"
                           aria-valuemin="0"
                           aria-valuemax="100"
@@ -243,7 +243,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 22%;"
+                          style={{ width: "22%" }}
                           aria-valuenow="22"
                           aria-valuemin="0"
                           aria-valuemax="100"
@@ -261,7 +261,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 16%;"
+                          style={{ width: "16%" }}
                           aria-valuenow="16"
                           aria-valuemin="0"
                           aria-valuemax="100"
@@ -279,7 +279,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 15%;"
+                          style={{ width: "15%" }}
                           aria-valuenow="15"
                           aria-valuemin="0"
                           aria-valuemax="100"
@@ -297,7 +297,7 @@ const Dashboard = () => {
                         <div
                           className="progress-bar bg-info"
                           role="progressbar"
-                          style="width: 13%;"
+                          style={{ width: "13%" }}
                           aria-valuenow="13"
                           aria-valuemin="0"
                           aria-valuemax="100"
