@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const auth = require("../../middleweare/auth");
 
 const { check, validationResult } = require("express-validator");
 
@@ -76,5 +77,28 @@ router.post(
     }
   }
 );
+
+router.get("/mec", auth, async (req, res) => {
+  try {
+    const user = await User.findOne({ user: req.user.id });
+
+    if (!user) {
+      return res.status(500).json({ msg: "there is no detail for this user" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("server Error");
+  }
+});
 
 module.exports = router;

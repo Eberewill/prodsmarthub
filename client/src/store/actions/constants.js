@@ -7,3 +7,8 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+
+export const PROJECT_ADDED = "PROJECT_ADDED";
+export const PROJECT_LOADED = "PROJECT_LOADED";
+export const PROJECTS_LOADED = "PROJECTS_LOADED";
+export const PROJECT_ERROR = "PROJECT_ERROR";

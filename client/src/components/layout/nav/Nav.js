@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { logout } from "../../../store/actions/auth";
 
@@ -30,9 +32,9 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 data-parent="#sidebar"
               >
                 <li className="sidebar-item">
-                  <a className="sidebar-link" href="dashboard-default.html">
+                  <Link className="sidebar-link" to="/addproject">
                     Default
-                  </a>
+                  </Link>
                 </li>
                 <li className="sidebar-item">
                   <a className="sidebar-link" href="dashboard-analytics-1.html">

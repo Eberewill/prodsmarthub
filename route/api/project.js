@@ -15,11 +15,10 @@ router.post(
   "/",
   [auth],
   [
-    check("title", "tittle is reuired").not().isEmpty(),
-    check("subtitle", "sub tittle is reuired").not().isEmpty(),
-    check("endingdate", "end date is reuired is reuired").not().isEmpty(),
+    check("title", "tittle is required").not().isEmpty(),
+    check("subtitle", "sub tittle is required").not().isEmpty(),
   ],
-  async (re, res) => {
+  async (req, res) => {
     //validation for imput fields
 
     try {
@@ -34,16 +33,16 @@ router.post(
       //build project object
 
       //get current user
-      const user = await User.findById(req.user.id).select("-password");
+      var user = await User.findById(req.user.id).select("-password");
 
-      projectFields.owner = user;
-
-      const projectFields = {};
+      var projectFields = {};
       if (title) projectFields.title = title;
       if (subtitle) projectFields.subtitle = subtitle;
       if (status) projectFields.status = status;
       if (giturl) projectFields.giturl = giturl;
       if (endingdate) projectFields.endingdate = endingdate;
+
+      projectFields.owner = user;
 
       if (tags) {
         projectFields.tags = tags.split(",").map((tag) => tag.trim());
@@ -53,7 +52,7 @@ router.post(
       await project.save();
       res.json(project);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
       res.status(500).send("server Error ");
     }
   }
@@ -65,7 +64,7 @@ router.post(
 
 router.get("/", auth, async (req, res) => {
   try {
-    const myprojects = await Project.findOne({ owner: req.user.id });
+    const myprojects = await Project.find({ owner: req.user.id });
     if (!myprojects) {
       res.send("not project for this user");
     }
