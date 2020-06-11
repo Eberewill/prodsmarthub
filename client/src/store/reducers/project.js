@@ -8,7 +8,7 @@ import {
 //dec init state
 
 const initialState = {
-  Project: null,
+  sProject: null,
   projectList: [],
   error: {},
   loading: false,
@@ -20,7 +20,7 @@ export default function (state = initialState, action) {
     case PROJECT_ADDED:
       return {
         ...state,
-        Project: payload,
+        sProject: payload,
         loading: false,
       };
     case PROJECTS_LOADED:
@@ -29,11 +29,17 @@ export default function (state = initialState, action) {
         projectList: payload,
         loading: false,
       };
+    case PROJECT_LOADED:
+      return {
+        ...state,
+        sProject: payload,
+        loading: false,
+      };
     case PROJECT_ERROR:
       return {
         ...state,
         error: payload,
-        Project: null,
+        sProject: null,
         loading: false,
       };
 

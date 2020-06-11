@@ -32,8 +32,8 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 data-parent="#sidebar"
               >
                 <li className="sidebar-item">
-                  <Link className="sidebar-link" to="/addproject">
-                    Default
+                  <Link className="sidebar-link" to="/projectlist">
+                    Projects
                   </Link>
                 </li>
                 <li className="sidebar-item">

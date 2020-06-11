@@ -50,3 +50,20 @@ export const loadProjects = () => async (dispatch) => {
     });
   }
 };
+// get Project By ID
+
+export const getProject = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/projects/${id}`);
+
+    dispatch({
+      type: PROJECT_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

@@ -17,6 +17,7 @@ import store from "./store/index";
 import { loadUser, register } from "./store/actions/auth";
 import SingleProject from "./components/project/SingleProject";
 import setAuthToken from "./utils/setAuthToken";
+import Project from "./components/project/Project";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -49,6 +50,7 @@ const App = () => {
                   path="/projectlist"
                   component={PrjectList}
                 />
+                <PrivateRoute path="/project/:id" component={Project} />
 
                 <PrivateRoute exact path="/addproject" component={AddProject} />
               </Switch>

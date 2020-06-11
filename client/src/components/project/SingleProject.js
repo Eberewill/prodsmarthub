@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "react-moment";
 
 const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
   return (
@@ -29,28 +30,9 @@ const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
         </div>
         <div class="card-body px-4 pt-2">
           <p>{subtitle}</p>
-
-          <img
-            src="img\avatars\avatar-3.jpg"
-            class="rounded-circle mr-1"
-            alt="Avatar"
-            width="28"
-            height="28"
-          />
-          <img
-            src="img\avatars\avatar-2.jpg"
-            class="rounded-circle mr-1"
-            alt="Avatar"
-            width="28"
-            height="28"
-          />
-          <img
-            src="img\avatars\avatar.jpg"
-            class="rounded-circle mr-1"
-            alt="Avatar"
-            width="28"
-            height="28"
-          />
+          <small class="text-muted">
+            <Moment format="YYYY/MM/DD">{startdate}</Moment>{" "}
+          </small>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item px-4 pb-4">

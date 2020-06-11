@@ -76,4 +76,25 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+//@ Route GEt api/projects/:id
+//@ Desc: Get  Projects By ID
+//@ Access: Private
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ msg: "Project Not Found" });
+    }
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+
+    if (err.kind == "ObjectId") {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+    res.status(400).send("server error");
+  }
+});
+
 module.exports = router;

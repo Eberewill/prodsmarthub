@@ -3,6 +3,7 @@ import ProjectAdd from "./ProjectAdd";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import SingleProject from "./SingleProject";
 import { addProject, loadProjects } from "../../store/actions/project";
 
@@ -20,7 +21,7 @@ const customStyles = {
 };
 
 const ProjectList = ({
-  project: { ProjectList },
+  project: { projectList },
   auth: { user },
   addProject,
   loadProjects,
@@ -52,12 +53,13 @@ const ProjectList = ({
         </a>
         <h1 class="h3 mb-3">Projects</h1>
         <div class="row">
-          {project.projectList.map((projects) => (
+          {projectList.map((projects) => (
             <SingleProject
               key={projects._id}
               title={projects.title}
               subtitle={projects.subtitle}
               status={projects.status}
+              startdate={projects.startdate}
             />
           ))}
         </div>

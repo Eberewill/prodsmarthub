@@ -1,0 +1,106 @@
+<!--<div style="font-size: 14pt; text-align: center; color:#FFFFFF; padding: 32px;">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeyjw9u2BPGyEimWA6kYzhRTZw3tKs5ROx4HSs9WxXl_rFDew/viewform?embedded=true" width="650" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>-->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="well well-sm">
+      <form action="https://eng.com.ng/public/email.php" id="postData">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name"> Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Enter name"
+                name="name"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email"> Email Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><span class="glyphicon glyphicon-envelope"></span>
+                </span>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email"
+                  name="email"
+                  required="required"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject"> Subject</label>
+              <select
+                id="subject"
+                name="subject"
+                class="form-control"
+                required="required"
+              >
+                <option value="na" selected="">Choose One:</option>
+                <option value="service">General Customer Service</option>
+                <option value="suggestions">Suggestions</option>
+                <option value="product">Product Support</option>
+                <option value="product">Product Support</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name"> Message</label>
+              <textarea
+                name="message"
+                id="message"
+                class="form-control"
+                rows="9"
+                cols="25"
+                required="required"
+                placeholder="Message"
+              ></textarea>
+            </div>
+            <div class="alert alert-success" id="correct"></div>
+            <div class="alert alert-danger" id="error"></div>
+          </div>
+          <div class="col-md-12">
+            <button
+              type="submit"
+              class="btn btn-primary pull-right"
+              id="btnContactUs"
+            >
+              Send Message
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $("#correct").hide();
+    $("#error").hide();
+    $("#postData").submit(function (e) {
+      e.preventDefault();
+      $("#correct").hide();
+      $("#error").hide();
+      var url = $(this).attr("action");
+      var data = $(this).serialize();
+      $.post(url, data, function (o) {
+        var response = JSON.parse(o);
+        if (response["code"] === 1) {
+          $("#correct").html(response["message"]).show(300);
+          $("#postData").trigger("reset");
+        } else {
+          $("#error").html(response["message"]).show(300);
+        }
+      });
+      return false;
+    });
+  });
+</script>
