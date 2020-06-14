@@ -16,7 +16,6 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
           </a>
 
           <ul className="sidebar-nav">
-            <li className="sidebar-header">Main</li>
             <li className="sidebar-item">
               <a
                 href="#dashboards"
@@ -24,7 +23,7 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 className="sidebar-link collapsed"
               >
                 <i className="align-middle" data-feather="sliders"></i>{" "}
-                <span className="align-middle">Dashboard</span>
+                <span className="align-middle">Project</span>
               </a>
               <ul
                 id="dashboards"
@@ -38,25 +37,12 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 </li>
                 <li className="sidebar-item">
                   <a className="sidebar-link" href="dashboard-analytics-1.html">
-                    Analytics
+                    Tasks
                   </a>
                 </li>
                 <li className="sidebar-item">
                   <a className="sidebar-link" href="dashboard-e-commerce.html">
-                    E-commerce
-                  </a>
-                </li>
-                <li className="sidebar-item">
-                  <a className="sidebar-link" href="dashboard-social.html">
-                    Social
-                  </a>
-                </li>
-                <li className="sidebar-item">
-                  <a className="sidebar-link" href="dashboard-crypto.html">
-                    Crypto{" "}
-                    <span className="sidebar-badge badge badge-primary">
-                      New
-                    </span>
+                    Bugs
                   </a>
                 </li>
               </ul>
@@ -73,7 +59,7 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 height="40"
               />
               <div className="media-body">
-                <h5 className="mb-1">Chris Wood</h5>
+                <h5 className="mb-1">Hlo</h5>
                 <div>
                   <i className="fas fa-circle text-success"></i> Online
                 </div>

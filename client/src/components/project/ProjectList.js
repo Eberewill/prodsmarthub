@@ -55,6 +55,7 @@ const ProjectList = ({
         <div class="row">
           {projectList.map((projects) => (
             <SingleProject
+              link={projects._id}
               key={projects._id}
               title={projects.title}
               subtitle={projects.subtitle}

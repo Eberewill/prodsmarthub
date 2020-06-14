@@ -1,9 +1,18 @@
 import React from "react";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
-const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
+const SingleProject = ({
+  title,
+  subtitle,
+  startdate,
+  endingdate,
+  status,
+  link,
+  key,
+}) => {
   return (
-    <div class="col-12 col-md-6 col-lg-3">
+    <div class="col-12 col-md-6 col-lg-3" key={key}>
       <div class="card">
         <div class="card-header px-4 pt-4">
           <div class="card-actions float-right">
@@ -13,9 +22,9 @@ const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
               </a>
 
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">
+                <Link class="dropdown-item" to={`project/${link}`}>
                   view
-                </a>
+                </Link>
                 <a class="dropdown-item" href="#">
                   Delete
                 </a>
@@ -25,7 +34,10 @@ const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
               </div>
             </div>
           </div>
-          <h5 class="card-title mb-0">{title}</h5>
+          <h5 class="card-title mb-0">
+            {" "}
+            <Link to={`project/${link}`}>{title}</Link>{" "}
+          </h5>
           <div class="badge badge-success my-2">{status}</div>
         </div>
         <div class="card-body px-4 pt-2">
@@ -37,7 +49,7 @@ const SingleProject = ({ title, subtitle, startdate, endingdate, status }) => {
         <ul class="list-group list-group-flush">
           <li class="list-group-item px-4 pb-4">
             <p class="mb-2 font-weight-bold">
-              Progress <span class="float-right">100%</span>
+              {status} <span class="float-right">100%</span>
             </p>
             <div class="progress progress-sm">
               <div
