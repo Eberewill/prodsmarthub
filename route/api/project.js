@@ -97,4 +97,39 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+//@ Route GEt api/projects/:id
+//@ Desc: Get  Projects By ID
+//@ Access: Private
+
+router.put(
+  "/bugs",
+  [auth],
+  [
+    check("heading", "heading is required").not().isEmpty(),
+    check("subheading", "subtittle is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { heading, category, subheading, status, remarks, _id } = req.body;
+
+      const newbug = {};
+      if (heading) newbug.heading = heading;
+      if (subheading) newbug.subheading = subheading;
+      if (status) newbug.status = status;
+      if (remarks) newbug.remarks = remarks;
+      if (category) newbug.category = category;
+
+      const project = await Project.findById(_id);
+      project.bugs.unshift(newbug);
+      await project.save();
+
+      res.json(project);
+    } catch (error) {}
+  }
+);
+
 module.exports = router;

@@ -3,12 +3,13 @@ import {
   PROJECT_ADDED,
   PROJECT_ERROR,
   PROJECT_LOADED,
+  PROJECT_UPDATED,
 } from "../actions/constants";
 
 //dec init state
 
 const initialState = {
-  sProject: null,
+  sProject: {},
   projectList: [],
   error: {},
   loading: false,
@@ -29,6 +30,7 @@ export default function (state = initialState, action) {
         projectList: payload,
         loading: false,
       };
+    case PROJECT_UPDATED:
     case PROJECT_LOADED:
       return {
         ...state,

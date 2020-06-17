@@ -6,6 +6,7 @@ import {
   PROJECT_ERROR,
   PROJECTS_LOADED,
   PROJECT_LOADED,
+  PROJECT_UPDATED,
 } from "./constants";
 
 export const addProject = (formData) => async (dispatch) => {
@@ -60,6 +61,29 @@ export const getProject = (id) => async (dispatch) => {
       type: PROJECT_LOADED,
       payload: res.data,
     });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//addbug
+export const addBug = (formdata) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.put(`/api/projects/bugs`, formdata, config);
+
+    dispatch({
+      type: PROJECT_UPDATED,
+      payload: res.data,
+    });
+    dispatch(setAlert("bug Added", "success"));
   } catch (err) {
     dispatch({
       type: PROJECT_ERROR,

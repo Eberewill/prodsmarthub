@@ -64,6 +64,9 @@ const ProjectSchema = new mongoose.Schema({
       subheading: {
         type: String,
       },
+      category: {
+        type: String,
+      },
       startdate: {
         type: Date,
         default: Date.now,
