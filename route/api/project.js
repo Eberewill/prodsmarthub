@@ -97,12 +97,12 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-//@ Route GEt api/projects/:id
+//@ Route Add Bugg to a Project
 //@ Desc: Get  Projects By ID
 //@ Access: Private
 
 router.put(
-  "/bugs",
+  "/:id",
   [auth],
   [
     check("heading", "heading is required").not().isEmpty(),
@@ -114,22 +114,68 @@ router.put(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      const { heading, category, subheading, status, remarks, _id } = req.body;
+      const { heading, subheading, status, remarks, _id } = req.body;
 
       const newbug = {};
       if (heading) newbug.heading = heading;
       if (subheading) newbug.subheading = subheading;
       if (status) newbug.status = status;
       if (remarks) newbug.remarks = remarks;
-      if (category) newbug.category = category;
 
-      const project = await Project.findById(_id);
+      const project = await Project.findById(req.params.id);
       project.bugs.unshift(newbug);
       await project.save();
 
       res.json(project);
-    } catch (error) {}
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server Error l");
+    }
   }
 );
+
+//@ Route Add Task to a Project
+//@ Desc: Get  Projects By ID
+//@ Access: Private
+
+router.put(
+  "/:id/task",
+  [auth],
+  [
+    check("heading", "heading is required").not().isEmpty(),
+    check("endingdate", "subtittle is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { heading, endingdate, status, remarks } = req.body;
+
+      const newtask = {};
+      if (heading) newtask.heading = heading;
+      if (endingdate) newtask.endingdate = endingdate;
+      if (status) newtask.status = status;
+      if (remarks) newtask.remarks = remarks;
+
+      const project = await Project.findById(req.params.id);
+      project.tasks.unshift(newtask);
+      await project.save();
+
+      res.json(project);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server Error ");
+    }
+  }
+);
+router.delete("/bug/:id", auth, (req, res) => {
+  try {
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server Error ");
+  }
+});
 
 module.exports = router;

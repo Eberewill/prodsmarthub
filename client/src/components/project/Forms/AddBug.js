@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 
-import { Link, Redirect } from "react-router-dom";
-
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import DatePicker from "react-date-picker";
 
-const AddBug = ({ addbugg, setIsOpen }) => {
+import { Link, withRouter } from "react-router-dom";
+
+import { addBug } from "../../../store/actions/project";
+import Project from "../Project";
+
+const AddBug = ({ addBug, match, history }) => {
   const [formData, setFormData] = useState({
     heading: "",
     subheading: "",
     status: "",
-    remark: "",
+    remarks: "",
     category: "",
   });
 
-  const { heading, subheading, status, remark, category } = formData;
+  const { heading, subheading, status, remarks, category } = formData;
+  const currentproject = match.params.id;
+  const [modalValue, setModalValue] = useState("");
 
   const onChange = (e) =>
     setFormData({
@@ -23,8 +28,9 @@ const AddBug = ({ addbugg, setIsOpen }) => {
     });
   const onSubmit = async (e) => {
     e.preventDefault();
-    await addbugg(formData);
-    setIsOpen(false);
+    await addBug(formData, currentproject, history);
+    setFormData(" ");
+    setModalValue("modal");
   };
 
   return (
@@ -73,26 +79,34 @@ const AddBug = ({ addbugg, setIsOpen }) => {
                     placeholder="Status"
                   />
                 </div>
-
                 <div class="form-group">
-                  <label class="form-label">Bugg Category</label>
-                  <select
+                  <label class="form-label">status</label>
+                  <input
+                    type="text"
                     class="form-control"
-                    name="validation-select"
-                    value={category}
-                    name="Category"
+                    name="remarks"
+                    value={remarks}
                     onChange={(e) => onChange(e)}
-                  >
-                    <option value="">Select Category</option>
-                    <optgroup label="Dev">
-                      <option value="Synax Error">Syntax Error</option>
-                      <option value="compatabilities">compatabilities</option>
-
-                      <option value="Others">Others</option>
-                    </optgroup>
-                  </select>
+                    placeholder="remarks"
+                  />
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <div class="form-group">
+                  <label class="form-label">status</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="category"
+                    value={category}
+                    onChange={(e) => onChange(e)}
+                    placeholder="category"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  data-dismiss={modalValue}
+                  class="btn btn-primary  "
+                >
                   Submit
                 </button>
               </form>
@@ -103,5 +117,12 @@ const AddBug = ({ addbugg, setIsOpen }) => {
     </div>
   );
 };
+Project.PropTypes = {
+  addBug: PropTypes.object.isRequired,
+};
 
-export default AddBug;
+const mapStateToProps = (state) => ({
+  Project: state.project,
+});
+
+export default connect(mapStateToProps, { addBug })(withRouter(AddBug));

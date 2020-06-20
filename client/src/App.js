@@ -11,6 +11,7 @@ import Footer from "./components/layout/Footer";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrjectList from "./components/project/ProjectList";
+import AddBug from "./components/project/Forms/AddBug";
 //redux
 import { Provider } from "react-redux";
 import store from "./store/index";
@@ -51,6 +52,7 @@ const App = () => {
                   component={PrjectList}
                 />
                 <PrivateRoute path="/project/:id" component={Project} />
+                <PrivateRoute path="/projectbug/:id" component={AddBug} />
 
                 <PrivateRoute exact path="/addproject" component={AddProject} />
               </Switch>

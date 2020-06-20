@@ -70,19 +70,20 @@ export const getProject = (id) => async (dispatch) => {
 };
 
 //addbug
-export const addBug = (formdata) => async (dispatch) => {
+export const addBug = (formdata, project, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   try {
-    const res = await axios.put(`/api/projects/bugs`, formdata, config);
+    const res = await axios.put(`/api/projects/${project}`, formdata, config);
 
     dispatch({
       type: PROJECT_UPDATED,
       payload: res.data,
     });
+    //  window.location.reload();
     dispatch(setAlert("bug Added", "success"));
   } catch (err) {
     dispatch({
@@ -91,3 +92,33 @@ export const addBug = (formdata) => async (dispatch) => {
     });
   }
 };
+
+//addTask
+export const addTask = (formdata, project) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.put(
+      `/api/projects/${project}/task`,
+      formdata,
+      config
+    );
+
+    dispatch({
+      type: PROJECT_UPDATED,
+      payload: res.data,
+    });
+    //  window.location.reload();
+    dispatch(setAlert("Task Added", "success"));
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//remove bugg

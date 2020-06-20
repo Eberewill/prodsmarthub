@@ -1,40 +1,108 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import AddBug from "../project/Forms/AddBug";
 
 import Modal from "react-modal";
+import Bugs from "./Bugs";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getProject } from "../../store/actions/project";
+import { getProject, addTask } from "../../store/actions/project";
 import { Link } from "react-router-dom";
 
 import Moment from "react-moment";
+import AddTask from "./Forms/AddTask";
+import Tasks from "./Tasks";
 
 const Project = ({
   project: {
-    sProject: { title, subtitle, giturl, tags, startdate },
+    sProject: { title, subtitle, giturl, tags, startdate, bugs, tasks },
   },
   auth,
   getProject,
   match,
 }) => {
-  var subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+  const [projectId, setPrjectId] = useState({ projectId: match.params.id });
+  const currentproject = match.params.id;
   useEffect(() => {
     getProject(match.params.id);
   }, [getProject]);
   return (
     <main className="content">
       <div className="container-fluid p-0">
+        <div
+          className="modal fade"
+          id="addbug"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Centered modal</h5>
+                <button
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <AddBug />
+              {
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="modal fade"
+          id="AddTask"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Task</h5>
+                <button
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <AddTask addTask={addTask} currentproject={currentproject} />
+              {
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
         <div>
           <button
             type="button"
@@ -46,10 +114,15 @@ const Project = ({
             Actions
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">
+            <a
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#AddTask"
+              href="#"
+            >
               Add Task
             </a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" data-toggle="modal" data-target="#addbug">
               Add Bugg
             </a>
             <a class="dropdown-item" href="#">
@@ -76,7 +149,7 @@ const Project = ({
         </div>
 
         <div className="row">
-          <div class="col-xl-4">
+          <div class="col-xl-6">
             <div class="card">
               <div class="card-header">
                 <h5 class="card-title mb-0">Project Summery</h5>
@@ -156,124 +229,92 @@ const Project = ({
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-7 col-xl-8 d-flex">
-            <div className="card flex-fill">
-              <div className="card-header">
-                <div className="card-actions float-right"></div>
-                <h5 className="card-title mb-0">Tasks</h5>
-              </div>
-              <table
-                id="datatables-dashboard-traffic"
-                className="table table-striped my-0"
-              >
-                <thead>
-                  <tr>
-                    <th>Source</th>
-                    <th className="text-right">Users</th>
-                    <th className="d-none d-xl-table-cell text-right">
-                      Sessions
-                    </th>
-                    <th className="d-none d-xl-table-cell text-right">
-                      Bounce Rate
-                    </th>
-                    <th className="d-none d-xl-table-cell text-right">
-                      Avg. Session Duration
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Google</td>
-                    <td className="text-right">1023</td>
-                    <td className="d-none d-xl-table-cell text-right">1265</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      27.23%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:06:25
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bing</td>
-                    <td className="text-right">504</td>
-                    <td className="d-none d-xl-table-cell text-right">623</td>
-                    <td className="d-none d-xl-table-cell text-right text-danger">
-                      66.76%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:04:42
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Twitter</td>
-                    <td className="text-right">462</td>
-                    <td className="d-none d-xl-table-cell text-right">571</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      31.53%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:08:05
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Pinterest</td>
-                    <td className="text-right">623</td>
-                    <td className="d-none d-xl-table-cell text-right">770</td>
-                    <td className="d-none d-xl-table-cell text-right text-danger">
-                      52.81%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:03:10
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Facebook</td>
-                    <td className="text-right">812</td>
-                    <td className="d-none d-xl-table-cell text-right">1003</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      24.83%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:05:56
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>DuckDuckGo</td>
-                    <td className="text-right">693</td>
-                    <td className="d-none d-xl-table-cell text-right">856</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      37.36%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:09:12
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>GitHub</td>
-                    <td className="text-right">713</td>
-                    <td className="d-none d-xl-table-cell text-right">881</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      38.09%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:06:19
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Direct</td>
-                    <td className="text-right">872</td>
-                    <td className="d-none d-xl-table-cell text-right">1077</td>
-                    <td className="d-none d-xl-table-cell text-right text-success">
-                      32.70%
-                    </td>
-                    <td className="d-none d-xl-table-cell text-right">
-                      00:09:18
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {bugs ? (
+            <>
+              <div class="col-xl-6">
+                <div class="card">
+                  <div className="card-header">
+                    <div className="card-actions float-right"></div>
+                    <h5 className="card-title mb-0">Bugs</h5>
+                  </div>
+                  <table
+                    id="datatables-dashboard-traffic"
+                    className="table table-striped my-0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Bugg</th>
+                        <th className="text-right">Status</th>
+
+                        <th className="d-none d-xl-table-cell text-right">
+                          Recorded
+                        </th>
+                        <th className="d-none d-xl-table-cell text-right">
+                          Remarks
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bugs.map((bugg) => (
+                        <Bugs
+                          heading={bugg.heading}
+                          status={bugg.status}
+                          startdate={bugg.startdate}
+                          remarks={bugg.remarks}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>{" "}
+            </>
+          ) : (
+            <> No Bugs</>
+          )}
+
+          {tasks ? (
+            <>
+              <div class="col-xl-6">
+                <div class="card">
+                  <div className="card-header">
+                    <div className="card-actions float-right"></div>
+                    <h5 className="card-title mb-0">Bugs</h5>
+                  </div>
+                  <table
+                    id="datatables-dashboard-traffic"
+                    className="table table-striped my-0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Bugg</th>
+                        <th className="text-right">Status</th>
+
+                        <th className="d-none d-xl-table-cell text-right">
+                          Recorded
+                        </th>
+                        <th className="d-none d-xl-table-cell text-right">
+                          Remarks
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tasks.map((tasks) => (
+                        <Tasks
+                          heading={tasks.heading}
+                          status={tasks.status}
+                          startdate={tasks.startdate}
+                          remarks={tasks.remarks}
+                          endingdate={tasks.endingdate}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>{" "}
+            </>
+          ) : (
+            <> No Bugs</>
+          )}
         </div>
       </div>
     </main>
@@ -282,6 +323,7 @@ const Project = ({
 
 Project.propTypes = {
   project: PropTypes.object.isRequired,
+  bugs: PropTypes.array.isRequired,
   getProject: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
