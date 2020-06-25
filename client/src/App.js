@@ -19,6 +19,7 @@ import { loadUser, register } from "./store/actions/auth";
 import SingleProject from "./components/project/SingleProject";
 import setAuthToken from "./utils/setAuthToken";
 import Project from "./components/project/Project";
+import Profile from "./components/profile/Profile";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -52,6 +53,8 @@ const App = () => {
                   component={PrjectList}
                 />
                 <PrivateRoute path="/project/:id" component={Project} />
+
+                <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/projectbug/:id" component={AddBug} />
 
                 <PrivateRoute exact path="/addproject" component={AddProject} />

@@ -47,6 +47,11 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
                 </li>
               </ul>
             </li>
+            <li className="sidebar-link collapsed">
+              <Link className="sidebar-link" to="/profile">
+                Profile
+              </Link>
+            </li>
           </ul>
 
           <div className="sidebar-bottom d-none d-lg-block">
